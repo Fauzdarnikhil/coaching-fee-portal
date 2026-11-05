@@ -22,6 +22,11 @@ public class Payment {
     @JoinColumn(name = "student_id", nullable = false)
     private Student student;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "intended_instalment_id")
+    private Instalment intendedInstalment;
+
+
     @Column(name = "amount_received", nullable = false, precision = 12, scale = 2)
     private BigDecimal amountReceived;
 
@@ -48,10 +53,21 @@ public class Payment {
             PaymentMethod paymentMethod,
             String transactionReference
     ) {
+        this(student, amountReceived, paymentMethod, transactionReference, null);
+    }
+
+    public Payment(
+            Student student,
+            BigDecimal amountReceived,
+            PaymentMethod paymentMethod,
+            String transactionReference,
+            Instalment intendedInstalment
+    ) {
         this.student = student;
         this.amountReceived = amountReceived;
         this.paymentMethod = paymentMethod;
         this.transactionReference = transactionReference;
+        this.intendedInstalment = intendedInstalment;
         this.paymentStatus = PaymentStatus.PENDING;
     }
 
