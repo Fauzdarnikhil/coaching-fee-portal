@@ -1,4 +1,3 @@
-
 package com.iscode.coaching_fee_portal;
 
 import com.iscode.coaching_fee_portal.entity.Centre;
