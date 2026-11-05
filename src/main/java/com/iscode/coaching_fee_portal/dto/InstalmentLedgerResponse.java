@@ -13,8 +13,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 
 public class InstalmentLedgerResponse {
-    private Long InstalmentId;
-    private Long InstalmentNumber;
+    private Long instalmentId;
+    private Long instalmentNumber;
     private BigDecimal amountDue;
     private BigDecimal amountPaid;
     private BigDecimal outstandingAmount;

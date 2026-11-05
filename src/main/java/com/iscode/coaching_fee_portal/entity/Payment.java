@@ -52,11 +52,17 @@ public class Payment {
         this.amountReceived = amountReceived;
         this.paymentMethod = paymentMethod;
         this.transactionReference = transactionReference;
+        this.paymentStatus = PaymentStatus.PENDING;
     }
 
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
+    }
+
+    public void markSuccessful() {
+        this.paymentStatus = PaymentStatus.SUCCESS;
+        this.receivedAt = LocalDateTime.now();
     }
 
 

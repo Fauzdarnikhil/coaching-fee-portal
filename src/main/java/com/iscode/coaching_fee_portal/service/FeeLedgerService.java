@@ -8,6 +8,7 @@ import com.iscode.coaching_fee_portal.entity.PaymentStatus;
 import com.iscode.coaching_fee_portal.repository.FeePlanRepository;
 import com.iscode.coaching_fee_portal.repository.InstalmentRepository;
 import com.iscode.coaching_fee_portal.repository.PaymentAllocationRepository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -16,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional(readOnly = true)
+
 public class FeeLedgerService {
     private final PaymentAllocationRepository paymentAllocationRepository;
     private final InstalmentRepository instalmentRepository;

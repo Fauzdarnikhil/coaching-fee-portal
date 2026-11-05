@@ -22,6 +22,7 @@ public class PaymentAllocationService {
     public PaymentAllocationService(PaymentRepository paymentRepository,
                                     InstalmentRepository instalmentRepository,
                                     PaymentAllocationRepository paymentAllocationRepository){
+
         this.paymentRepository = paymentRepository;
         this.instalmentRepository = instalmentRepository;
         this.paymentAllocationRepository = paymentAllocationRepository;
@@ -29,10 +30,10 @@ public class PaymentAllocationService {
 
     @Transactional
     public PaymentAllocation allocation(Long paymentId, Long instalmentId, BigDecimal allocationAmount){
-        Payment payment = paymentRepository.findById(paymentId)
+        Payment payment = paymentRepository.findByIdWithLock(paymentId)
                 .orElseThrow(() -> new RuntimeException("Payment Not Found"));
 
-        Instalment instalment = instalmentRepository.findById(instalmentId)
+        Instalment instalment = instalmentRepository.findByIdWithLock(instalmentId)
                 .orElseThrow(() -> new RuntimeException("Instalment Not Found"));
 
         if (allocationAmount == null) {
@@ -89,7 +90,18 @@ public class PaymentAllocationService {
             );
         }
 
-        PaymentAllocation paymentAllocation = new PaymentAllocation(payment, instalment, allocationAmount);
+        PaymentAllocation existingAllocation = paymentAllocationRepository
+                .findByPaymentIdAndInstalmentId(paymentId, instalmentId).orElse(null);
+
+        if(existingAllocation != null){
+            existingAllocation.setAllocatedAmount(
+                    allocationAmount.add(existingAllocation.getAllocatedAmount())
+            );
+
+            return paymentAllocationRepository.save(existingAllocation);
+        }
+
+        PaymentAllocation paymentAllocation = new PaymentAllocation(payment,instalment,allocationAmount);
 
         return paymentAllocationRepository.save(paymentAllocation);
     }

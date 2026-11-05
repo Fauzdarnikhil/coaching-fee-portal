@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -35,6 +36,7 @@ public class PaymentAllocation {
     @JoinColumn(name = "instalment_id", nullable = false)
     private Instalment instalment;
 
+    @Setter
     @Column(name = "allocated_amount", nullable = false, precision = 12, scale = 2)
     private BigDecimal allocatedAmount;
 
