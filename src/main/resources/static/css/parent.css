@@ -499,3 +499,22 @@ button {
         font-size: 22px;
     }
 }
+
+
+.alternate-login {
+    color: var(--muted, #77817c);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.alternate-login a {
+    color: #176c54;
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: 4px;
+}
+
+.alternate-login a:hover {
+    text-decoration: underline;
+}
+

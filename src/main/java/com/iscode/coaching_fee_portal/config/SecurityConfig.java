@@ -1,4 +1,3 @@
-
 package com.iscode.coaching_fee_portal.config;
 
 import org.springframework.context.annotation.Bean;
@@ -38,17 +37,26 @@ public class SecurityConfig {
                 )
 
                 .authorizeHttpRequests(auth -> auth
+
                         .requestMatchers(
                                 "/",
                                 "/index.html",
-                                "/css/**",
-                                "/js/**",
                                 "/parent-login.html",
                                 "/parent-dashboard.html",
+                                "/accounts-login.html",
+                                "/css/**",
+                                "/js/**",
                                 "/favicon.ico",
                                 "/error",
                                 "/api/auth/**"
                         ).permitAll()
+
+                        .requestMatchers("/api/parent/**")
+                        .hasRole("PARENT")
+
+                        .requestMatchers("/api/accounts/**")
+                        .hasRole("ACCOUNTS")
+
                         .anyRequest().authenticated()
                 )
 

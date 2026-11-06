@@ -57,8 +57,7 @@ function escapeHTML(value) {
 }
 
 function getAccessToken() {
-    return sessionStorage.getItem("accessToken") ||
-        localStorage.getItem("accessToken");
+    return sessionStorage.getItem("accountsAccessToken");
 }
 
 function renderSummary(data) {
@@ -258,9 +257,10 @@ async function loadDashboard() {
         });
 
         if (response.status === 401 || response.status === 403) {
-            throw new Error(
-                "Authentication failed. Please provide a valid demo JWT."
-            );
+            sessionStorage.removeItem("accountsAccessToken");
+            sessionStorage.removeItem("accountsUserName");
+            window.location.replace("/accounts-login.html");
+            return;
         }
 
         if (!response.ok) {
@@ -756,4 +756,8 @@ elements.search.addEventListener("input", filterLedger);
 elements.statusFilter.addEventListener("change", filterLedger);
 
 /* Initial dashboard load */
-loadDashboard();
+if (!getAccessToken()) {
+    window.location.replace("/accounts-login.html");
+} else {
+    loadDashboard();
+}

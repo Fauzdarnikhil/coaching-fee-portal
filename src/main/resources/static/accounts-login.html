@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accounts Login | Company A</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/accounts.css">
+    <script src="/js/accounts-auth.js" defer></script>
+</head>
+<body>
+<main class="login-layout">
+    <section class="login-brand">
+        <div class="brand">
+            <div class="brand-mark">A</div>
+            <div>
+                <h2>Company A</h2>
+                <span>ACADEMIC MANAGEMENT</span>
+            </div>
+        </div>
+
+        <div class="brand-content">
+            <span class="eyebrow">ACCOUNTS WORKSPACE</span>
+            <h1>Manage collections with clarity.</h1>
+            <p>
+                Track student fees, monitor outstanding balances
+                and manage your centre's financial operations.
+            </p>
+
+            <div class="feature-list">
+                <div>
+                    <span class="feature-icon">₹</span>
+                    <span>Centralised fee management</span>
+                </div>
+                <div>
+                    <span class="feature-icon">↗</span>
+                    <span>Real-time collection overview</span>
+                </div>
+                <div>
+                    <span class="feature-icon">✓</span>
+                    <span>Secure role-based access</span>
+                </div>
+            </div>
+        </div>
+
+        <p class="brand-footer">Company A Coaching Institute · Jaipur</p>
+    </section>
+
+    <section class="login-panel">
+        <div class="login-card">
+            <div class="mobile-brand">
+                <div class="brand-mark">A</div>
+                <span>Company A</span>
+            </div>
+
+            <span class="login-eyebrow">WELCOME BACK</span>
+            <h2>Accounts Executive Login</h2>
+            <p class="login-description">
+                Enter your registered credentials to access your workspace.
+            </p>
+
+            <form id="accounts-login-form">
+                <div class="form-group">
+                    <label for="email">Work email</label>
+                    <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="accounts@company.com"
+                            autocomplete="username"
+                            required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                    >
+                </div>
+
+                <div id="login-message" class="login-message" role="alert" hidden></div>
+
+                <button type="submit" id="login-btn" class="login-button">
+                    Sign in to workspace
+                    <span>→</span>
+                </button>
+            </form>
+
+            <div class="login-divider"></div>
+
+            <p class="alternate-login">
+                Are you a parent?
+                <a href="/parent-login.html">Parent login</a>
+            </p>
+
+            <p class="security-note">
+                Secure access for authorised accounts personnel only.
+            </p>
+        </div>
+    </section>
+</main>
+</body>
+</html>

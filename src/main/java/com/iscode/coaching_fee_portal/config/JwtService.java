@@ -24,14 +24,18 @@ public class JwtService {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String generateToken(Long parentId) {
-
+    public String generateToken(Long userId, String role) {
         return Jwts.builder()
-                .subject(parentId.toString())
+                .subject(userId.toString())
+                .claim("role", role)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(getSigningKey())
                 .compact();
+    }
+
+    public String generateToken(Long parentId) {
+        return generateToken(parentId, "PARENT");
     }
 
     public boolean validateToken(String token) {
@@ -42,13 +46,12 @@ public class JwtService {
                     .parseSignedClaims(token);
 
             return true;
-
         } catch (Exception e) {
             return false;
         }
     }
 
-    public Long extractParentId(String token) {
+    public Long extractUserId(String token) {
         Claims claims = Jwts.parser()
                 .verifyWith(getSigningKey())
                 .build()
@@ -56,5 +59,19 @@ public class JwtService {
                 .getPayload();
 
         return Long.parseLong(claims.getSubject());
+    }
+
+    public Long extractParentId(String token) {
+        return extractUserId(token);
+    }
+
+    public String extractRole(String token) {
+        Claims claims = Jwts.parser()
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+
+        return claims.get("role", String.class);
     }
 }

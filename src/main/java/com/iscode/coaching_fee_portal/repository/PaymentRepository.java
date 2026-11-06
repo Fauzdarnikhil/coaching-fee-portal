@@ -23,4 +23,6 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
     Optional<Payment> findByIdWithLock(@Param("id") Long id);
 
     List<Payment> findByStudentIdOrderByCreatedAtDesc(Long studentId);
+
+    List<Payment> findByPaymentStatusOrderByCreatedAtDesc(PaymentStatus paymentStatus);
 }
