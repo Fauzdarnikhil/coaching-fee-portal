@@ -1,0 +1,222 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Parent Login | Company A</title>
+
+    <link rel="stylesheet" href="/css/parent.css">
+    <script src="/js/parent-auth.js" defer></script>
+</head>
+
+<body>
+
+<div class="login-page">
+
+    <!-- Left branding panel -->
+    <section class="brand-panel">
+
+        <div class="brand-logo">
+            <div class="logo-mark">A</div>
+
+            <div class="logo-text">
+                Company A
+            </div>
+        </div>
+
+        <div class="brand-content">
+
+            <span class="brand-tag">PARENT PORTAL</span>
+
+            <h1>Your child's progress, all in one place.</h1>
+
+            <p>
+                Stay informed about fee payments, academic progress,
+                attendance and important updates from the institute.
+            </p>
+
+            <div class="brand-features">
+
+                <div class="brand-feature">
+                    <span class="feature-icon">✓</span>
+                    View fee details and instalments
+                </div>
+
+                <div class="brand-feature">
+                    <span class="feature-icon">✓</span>
+                    Access payment receipts
+                </div>
+
+                <div class="brand-feature">
+                    <span class="feature-icon">✓</span>
+                    Track attendance and test scores
+                </div>
+
+            </div>
+        </div>
+
+        <div class="brand-footer">
+            © 2026 Company A. All rights reserved.
+        </div>
+
+    </section>
+
+
+    <!-- Login panel -->
+    <main class="login-panel">
+
+        <div class="login-card">
+
+            <!-- Mobile number screen -->
+            <section id="mobile-screen">
+
+                <div class="login-heading">
+
+                    <div class="eyebrow">PARENT ACCESS</div>
+
+                    <h2>Welcome back</h2>
+
+                    <p>
+                        Enter your registered mobile number
+                        to access your parent account.
+                    </p>
+
+                </div>
+
+                <form id="send-otp-form">
+
+                    <div class="form-group">
+
+                        <label for="mobile-number">
+                            Registered mobile number
+                        </label>
+
+                        <div class="input-wrapper has-prefix">
+
+                            <span class="phone-prefix">+91</span>
+
+                            <input
+                                    type="tel"
+                                    id="mobile-number"
+                                    placeholder="Enter 10-digit number"
+                                    maxlength="10"
+                                    inputmode="numeric"
+                                    autocomplete="tel-national"
+                                    required
+                            >
+
+                        </div>
+
+                    </div>
+
+                    <button
+                            type="submit"
+                            class="primary-btn"
+                            id="send-otp-btn"
+                    >
+                        Send OTP
+                    </button>
+
+                </form>
+
+                <div class="login-note">
+                    <span class="note-icon">🔒</span>
+                    Use the mobile number registered with the institute
+                    to securely access your parent account.
+                </div>
+
+            </section>
+
+
+            <!-- OTP verification screen -->
+            <section id="otp-screen" hidden>
+
+                <div class="otp-icon">✉</div>
+
+                <button
+                        type="button"
+                        id="change-number-btn"
+                        class="change-number-btn"
+                >
+                    ← Change mobile number
+                </button>
+
+                <div class="login-heading">
+
+                    <div class="eyebrow">SECURE VERIFICATION</div>
+
+                    <h2>Verify your number</h2>
+
+                    <p>
+                        Enter the six-digit verification code
+                        sent to your registered mobile number.
+                    </p>
+
+                </div>
+
+                <div class="otp-destination">
+                    Sent to <strong id="display-mobile"></strong>
+                </div>
+
+                <form id="verify-otp-form">
+
+                    <div class="form-group">
+
+                        <label for="otp-input">
+                            Verification code
+                        </label>
+
+                        <div class="input-wrapper">
+                            <input
+                                    type="text"
+                                    id="otp-input"
+                                    placeholder="000000"
+                                    maxlength="6"
+                                    inputmode="numeric"
+                                    autocomplete="one-time-code"
+                                    required
+                            >
+                        </div>
+
+                    </div>
+
+                    <button
+                            type="submit"
+                            class="primary-btn"
+                            id="verify-otp-btn"
+                    >
+                        Verify & Continue
+                    </button>
+
+                </form>
+
+            </section>
+
+
+            <!-- API feedback -->
+            <div
+                    id="login-message"
+                    class="login-message"
+                    role="alert"
+                    aria-live="polite"
+            ></div>
+
+            <hr class="login-divider">
+
+            <div class="support-text">
+                Secure access using mobile verification.
+                <br>
+                <strong>Company A Coaching Institute</strong>
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

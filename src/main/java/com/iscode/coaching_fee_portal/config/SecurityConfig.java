@@ -43,6 +43,8 @@ public class SecurityConfig {
                                 "/index.html",
                                 "/css/**",
                                 "/js/**",
+                                "/parent-login.html",
+                                "/parent-dashboard.html",
                                 "/favicon.ico",
                                 "/error",
                                 "/api/auth/**"

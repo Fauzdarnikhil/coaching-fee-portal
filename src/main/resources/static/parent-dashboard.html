@@ -1,0 +1,372 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Parent Dashboard | Company A</title>
+
+    <link rel="stylesheet" href="/css/parent-dashboard.css">
+    <script src="/js/parent-dashboard.js" defer></script>
+</head>
+
+<body>
+
+<div class="dashboard-layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-brand">
+            <div class="brand-logo">A</div>
+            <div>
+                <h2>Company A</h2>
+                <span>PARENT PORTAL</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <p class="nav-label">MENU</p>
+
+            <a href="#overview" class="nav-item active" data-section="overview">
+                <span>▦</span>
+                Overview
+            </a>
+
+            <a href="#fees" class="nav-item" data-section="fees">
+                <span>₹</span>
+                Fee Details
+            </a>
+
+            <a href="#payments" class="nav-item" data-section="payments">
+                <span>▤</span>
+                Payment History
+            </a>
+
+            <a href="#academic" class="nav-item" data-section="academic">
+                <span>▣</span>
+                Academic Progress
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="sidebar-help">
+                <span>?</span>
+                <div>
+                    <strong>Need help?</strong>
+                    <small>Contact the accounts office</small>
+                </div>
+            </div>
+
+            <button id="logout-btn" class="logout-btn">
+                <span>↪</span>
+                Logout
+            </button>
+        </div>
+
+    </aside>
+
+
+    <!-- Main content -->
+    <main class="main-content">
+
+        <!-- Topbar -->
+        <header class="topbar">
+
+            <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
+                ☰
+            </button>
+
+            <div class="topbar-title">
+                <span>Parent Portal</span>
+                <h2>Dashboard</h2>
+            </div>
+
+            <div class="topbar-profile">
+                <div class="profile-avatar" id="parent-avatar">P</div>
+                <div class="profile-details">
+                    <strong id="parent-name">Parent</strong>
+                    <small>Parent Account</small>
+                </div>
+            </div>
+
+        </header>
+
+
+        <!-- Loading state -->
+        <section id="loading-state" class="state-container">
+            <div class="loader"></div>
+            <p>Loading your dashboard...</p>
+        </section>
+
+
+        <!-- Error state -->
+        <section id="error-state" class="state-container" hidden>
+            <div class="state-icon">!</div>
+            <h3>Unable to load dashboard</h3>
+            <p id="error-message">
+                Something went wrong while fetching your information.
+            </p>
+            <button id="retry-btn" class="primary-btn">
+                Try Again
+            </button>
+        </section>
+
+
+        <!-- Dashboard content -->
+        <div id="dashboard-content" hidden>
+
+            <!-- Overview section -->
+            <section id="overview-section">
+
+                <div class="welcome-section">
+                    <div>
+                        <span class="section-eyebrow">PARENT DASHBOARD</span>
+                        <h1>Welcome back, <span id="welcome-name">Parent</span>!</h1>
+                        <p>Here's an overview of your children's fee information.</p>
+                    </div>
+
+                    <div class="welcome-date" id="current-date"></div>
+                </div>
+
+
+                <!-- Children section -->
+                <section class="content-section">
+
+                    <div class="section-heading">
+                        <div>
+                            <h2>Your Children</h2>
+                            <p>Students linked to your parent account</p>
+                        </div>
+                    </div>
+
+                    <div id="children-container" class="children-grid">
+                        <!-- Child cards rendered using JavaScript -->
+                    </div>
+
+                </section>
+
+
+                <!-- Fee summary -->
+                <section class="content-section">
+
+                    <div class="section-heading">
+                        <div>
+                            <h2>Fee Overview</h2>
+                            <p>Summary of your children's fee accounts</p>
+                        </div>
+                    </div>
+
+                    <div class="summary-grid">
+
+                        <article class="summary-card">
+                            <div class="summary-icon total-icon">₹</div>
+                            <div>
+                                <p>Total Fees</p>
+                                <h3 id="total-fees">₹0</h3>
+                            </div>
+                        </article>
+
+                        <article class="summary-card">
+                            <div class="summary-icon paid-icon">✓</div>
+                            <div>
+                                <p>Amount Paid</p>
+                                <h3 id="amount-paid">₹0</h3>
+                            </div>
+                        </article>
+
+                        <article class="summary-card">
+                            <div class="summary-icon due-icon">!</div>
+                            <div>
+                                <p>Outstanding Balance</p>
+                                <h3 id="outstanding-balance">₹0</h3>
+                            </div>
+                        </article>
+
+                    </div>
+
+                </section>
+
+
+                <!-- Recent instalments -->
+                <section class="content-section">
+
+                    <div class="section-heading">
+                        <div>
+                            <h2>Fee Instalments</h2>
+                            <p>Upcoming and outstanding instalments</p>
+                        </div>
+
+                        <button class="text-button" data-navigate="fees">
+                            View All →
+                        </button>
+                    </div>
+
+                    <div class="table-container">
+
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Instalment</th>
+                                <th>Due Date</th>
+                                <th>Amount Due</th>
+                                <th>Outstanding</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+
+                            <tbody id="overview-instalments-body">
+                            <tr>
+                                <td colspan="7" class="empty-cell">
+                                    Loading instalments...
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </section>
+
+            </section>
+
+
+            <!-- Fee details section -->
+            <section id="fees-section" class="page-section" hidden>
+
+                <div class="page-heading">
+                    <span class="section-eyebrow">FINANCIAL INFORMATION</span>
+                    <h1>Fee Details</h1>
+                    <p>View instalments, payments and outstanding balances.</p>
+                </div>
+
+                <div id="fee-plans-container">
+                    <!-- Fee plans rendered using JavaScript -->
+                </div>
+
+            </section>
+
+
+            <!-- Payment history section -->
+            <section id="payments-section" class="page-section" hidden>
+
+                <div class="page-heading">
+                    <span class="section-eyebrow">TRANSACTION RECORDS</span>
+                    <h1>Payment History</h1>
+                    <p>Review your previous payment transactions.</p>
+                </div>
+
+                <div id="payment-history-container">
+                    <!-- Payment history rendered using JavaScript -->
+                </div>
+
+            </section>
+
+
+            <!-- Academic section -->
+            <section id="academic-section" class="page-section" hidden>
+
+                <div class="page-heading">
+                    <span class="section-eyebrow">STUDENT PERFORMANCE</span>
+                    <h1>Academic Progress</h1>
+                    <p>Attendance and test performance information.</p>
+                </div>
+
+            </section>
+
+        </div>
+
+        <footer class="dashboard-footer">
+            © 2026 Company A Coaching Institute. All rights reserved.
+        </footer>
+
+    </main>
+
+</div>
+
+
+<!-- Mobile sidebar overlay -->
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+
+<!-- Payment modal -->
+<div class="modal-overlay" id="payment-modal" hidden>
+
+    <div class="payment-modal">
+
+        <button class="modal-close" id="close-payment-modal" aria-label="Close">
+            ×
+        </button>
+
+        <div class="modal-heading">
+            <span class="section-eyebrow">FEE PAYMENT</span>
+            <h2>Pay Instalment</h2>
+            <p>Review the payment details before continuing.</p>
+        </div>
+
+        <div class="payment-details">
+
+            <div>
+                <span>Student</span>
+                <strong id="payment-student">—</strong>
+            </div>
+
+            <div>
+                <span>Instalment</span>
+                <strong id="payment-instalment">—</strong>
+            </div>
+
+            <div>
+                <span>Outstanding Amount</span>
+                <strong id="payment-outstanding">₹0</strong>
+            </div>
+
+        </div>
+
+        <form id="payment-form">
+
+            <div class="form-group">
+                <label for="payment-amount">Amount to pay (₹)</label>
+                <input
+                        type="number"
+                        id="payment-amount"
+                        min="1"
+                        step="0.01"
+                        required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="payment-method">Payment method</label>
+
+                <select id="payment-method" required>
+                    <option value="UPI">UPI</option>
+                    <option value="CARD">Debit / Credit Card</option>
+                    <option value="NET_BANKING">Net Banking</option>
+                </select>
+            </div>
+
+            <button type="submit" id="payment-submit-btn" class="primary-btn">
+                Continue to Payment
+            </button>
+
+        </form>
+
+        <p id="payment-message" class="payment-message" hidden></p>
+
+        <p class="demo-notice">
+            Demo mode: Payments use the simulated gateway flow.
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>

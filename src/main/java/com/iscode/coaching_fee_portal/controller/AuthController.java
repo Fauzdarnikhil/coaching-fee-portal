@@ -10,7 +10,6 @@ import com.iscode.coaching_fee_portal.service.OtpService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -27,47 +26,75 @@ public class AuthController {
             OtpService otpService,
             ParentRepository parentRepository,
             JwtService jwtService) {
+
         this.otpService = otpService;
         this.parentRepository = parentRepository;
         this.jwtService = jwtService;
     }
 
     @PostMapping("/send-otp")
-    public ResponseEntity<String> sendOtp(
+    public ResponseEntity<?> sendOtp(
             @RequestBody SendOtpRequest request) {
 
-        otpService.generateOTP(request.getMobileNo());
+        try {
+            otpService.generateOTP(request.getMobileNo());
 
-        return ResponseEntity.ok("OTP Sent Successfully");
+            return ResponseEntity.ok(
+                    Map.of("message", "OTP sent successfully")
+            );
+
+        } catch (IllegalArgumentException e) {
+
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of(
+                            "message",
+                            "This mobile number is not registered with the institute."
+                    ));
+        }
     }
 
     @PostMapping("/verify-otp")
     public ResponseEntity<?> verifyOtp(
             @RequestBody VerifyOtpRequest request) {
 
-        boolean verified = otpService.verifyOTP(
-                request.getMobileNo(),
-                request.getOtp()
-        );
+        try {
+            boolean verified = otpService.verifyOTP(
+                    request.getMobileNo(),
+                    request.getOtp()
+            );
 
-        if (!verified) {
+            if (!verified) {
+                return ResponseEntity
+                        .status(HttpStatus.UNAUTHORIZED)
+                        .body(Map.of(
+                                "message",
+                                "Invalid or expired OTP. Please try again."
+                        ));
+            }
+
+            Parent parent = parentRepository
+                    .findByMobileNo(request.getMobileNo())
+                    .orElseThrow(() ->
+                            new IllegalArgumentException("Parent not found"));
+
+            String token = jwtService.generateToken(parent.getId());
+
+            return ResponseEntity.ok(
+                    Map.of(
+                            "message", "Login successful",
+                            "token", token
+                    )
+            );
+
+        } catch (IllegalArgumentException e) {
+
             return ResponseEntity
-                    .status(HttpStatus.UNAUTHORIZED)
-                    .body(Map.of("message", "Invalid or expired OTP"));
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of(
+                            "message",
+                            "Unable to verify OTP. Please request a new OTP."
+                    ));
         }
-
-        Parent parent = parentRepository
-                .findByMobileNo(request.getMobileNo())
-                .orElseThrow(() ->
-                        new IllegalArgumentException("Parent not found"));
-
-        String token = jwtService.generateToken(parent.getId());
-
-        return ResponseEntity.ok(
-                Map.of(
-                        "message", "Login successful",
-                        "token", token
-                )
-        );
     }
 }
