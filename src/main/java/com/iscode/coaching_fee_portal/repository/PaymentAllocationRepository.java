@@ -11,11 +11,13 @@ public interface PaymentAllocationRepository extends JpaRepository<PaymentAlloca
     @EntityGraph(attributePaths = {"payment"})
     List<PaymentAllocation> findByInstalmentId(Long instalmentId);
 
-    @EntityGraph(attributePaths = {"payment"})
+    @EntityGraph(attributePaths = {"payment", "instalment"})
     List<PaymentAllocation> findByPaymentId(Long paymentId);
 
     Optional<PaymentAllocation> findByPaymentIdAndInstalmentId(
             Long paymentId,
             Long instalmentId
     );
+
+
 }
