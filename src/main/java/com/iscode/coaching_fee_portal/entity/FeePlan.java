@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -33,6 +34,12 @@ public class FeePlan {
     @Column(name = "academic_year", nullable = false, length = 20)
     private String academicYear;
 
+    @Column(name = "course_start_date", nullable = false)
+    private LocalDate courseStartDate;
+
+    @Column(name = "course_end_date", nullable = false)
+    private LocalDate courseEndDate;
+
     @Column(name = "total_fee", nullable = false, precision = 12, scale = 2)
     private BigDecimal totalFee;
 
@@ -46,14 +53,24 @@ public class FeePlan {
             Student student,
             String academicYear,
             BigDecimal totalFee,
-            BigDecimal discountAmount
+            BigDecimal discountAmount,
+            LocalDate courseStartDate,
+            LocalDate courseEndDate
     ) {
+
+        if (courseStartDate == null || courseEndDate == null ||
+                !courseEndDate.isAfter(courseStartDate)) {
+            throw new IllegalArgumentException("Invalid course duration");
+        }
+
         this.student = student;
         this.academicYear = academicYear;
         this.totalFee = totalFee;
         this.discountAmount = discountAmount == null
                 ? BigDecimal.ZERO
                 : discountAmount;
+        this.courseStartDate = courseStartDate;
+        this.courseEndDate = courseEndDate;
     }
 
     @PrePersist

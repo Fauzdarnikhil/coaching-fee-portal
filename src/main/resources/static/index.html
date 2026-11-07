@@ -37,6 +37,9 @@
             <a href="#" class="nav-link" data-page="fees">
                 <span>₹</span> Fee Ledger
             </a>
+            <a href="#" class="nav-link" data-page="unmatched">
+                <span>↔</span> Unmatched Payments
+            </a>
             <a href="#" class="nav-link" data-page="reminders">
                 <span>♧</span> Reminders
             </a>
@@ -76,22 +79,17 @@
             </div>
         </header>
 
-        <!-- DASHBOARD VIEW -->
-        <section class="page-content" id="dashboard-view">
+
+        <section class="page-content" id="overview-view">
 
             <div class="welcome-row">
                 <div>
                     <h2>Collection summary</h2>
-                    <p>Monitor fee collection and outstanding dues across your centre.</p>
+                    <p>Monitor fee collection, outstanding dues and centre performance.</p>
                 </div>
-
-                <button class="button button-primary" id="export-btn">
-                    Export report
-                </button>
             </div>
 
             <section class="summary-grid">
-
                 <article class="summary-card">
                     <span class="summary-label">Total fees</span>
                     <strong id="total-fees">₹0</strong>
@@ -115,15 +113,151 @@
                     <strong id="overdue-fees">₹0</strong>
                     <span class="summary-note">Past due date</span>
                 </article>
-
             </section>
+
+            <section class="panel breakdown-panel">
+                <div class="panel-header">
+                    <div>
+                        <h2>Centre-wise collection</h2>
+                        <p>Compare fee collection and overdue ageing across centres.</p>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>CENTRE</th>
+                            <th>TOTAL FEES</th>
+                            <th>COLLECTED</th>
+                            <th>OUTSTANDING</th>
+                            <th>OVERDUE</th>
+                            <th>1–30 DAYS</th>
+                            <th>31–60 DAYS</th>
+                            <th>61+ DAYS</th>
+                        </tr>
+                        </thead>
+                        <tbody id="centre-summary-body">
+                        <tr>
+                            <td colspan="8" class="empty-state">Loading centre summary...</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="panel breakdown-panel">
+                <div class="panel-header">
+                    <div>
+                        <h2>Batch-wise collection</h2>
+                        <p>Compare fee collection and overdue ageing across batches.</p>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>BATCH</th>
+                            <th>TOTAL FEES</th>
+                            <th>COLLECTED</th>
+                            <th>OUTSTANDING</th>
+                            <th>OVERDUE</th>
+                            <th>1–30 DAYS</th>
+                            <th>31–60 DAYS</th>
+                            <th>61+ DAYS</th>
+                        </tr>
+                        </thead>
+                        <tbody id="batch-summary-body">
+                        <tr>
+                            <td colspan="8" class="empty-state">Loading batch summary...</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </section>
+
+
+        <section class="page-content" id="students-view" hidden>
+
+            <div class="welcome-row">
+                <div>
+                    <h2>Student directory</h2>
+                    <p>View enrolled students and their overall fee balances.</p>
+                </div>
+            </div>
+
+            <section class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h2>All students</h2>
+                        <p>Each student appears once. Select a student to view their profile.</p>
+                    </div>
+                    <button class="button button-secondary" id="refresh-students-btn">
+                        Refresh
+                    </button>
+                </div>
+
+                <div class="toolbar">
+                    <input
+                            type="search"
+                            id="student-directory-search"
+                            placeholder="Search by student name or ID..."
+                    >
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>STUDENT</th>
+                            <th>STUDENT ID</th>
+                            <th>BATCH</th>
+                            <th>CENTRE</th>
+                            <th>TOTAL FEES</th>
+                            <th>PAID</th>
+                            <th>OUTSTANDING</th>
+                            <th>ACTION</th>
+                        </tr>
+                        </thead>
+                        <tbody id="student-directory-body">
+                        <tr>
+                            <td colspan="8" class="empty-state">Loading students...</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-footer">
+                    <span id="student-directory-count">0 students</span>
+                </div>
+            </section>
+        </section>
+
+
+
+        <section class="page-content" id="dashboard-view" hidden>
+
+            <div class="welcome-row">
+                <div>
+                    <h2>Collection summary</h2>
+                    <p>Monitor fee collection and outstanding dues across your centre.</p>
+                </div>
+
+                <button class="button button-primary" id="export-btn">
+                    Export report
+                </button>
+            </div>
+
 
             <section class="panel">
 
                 <div class="panel-header">
                     <div>
-                        <h2>Student fee ledger</h2>
-                        <p>Track instalments, payments and outstanding balances.</p>
+                        <h2>fee ledger</h2>
+                        <p>Track student instalments, payments and outstanding balances</p>
                     </div>
 
                     <button class="button button-secondary" id="refresh-btn">
@@ -182,7 +316,359 @@
 
         </section>
 
-        <!-- STUDENT DETAIL VIEW -->
+        <section class="page-content unmatched-view" id="unmatched-view" hidden>
+
+            <div class="welcome-row">
+                <div>
+                    <h2>Unmatched payments</h2>
+                    <p>Review successful payments that have not been fully allocated to instalments.</p>
+                </div>
+
+                <button class="button button-secondary" id="refresh-unmatched-btn">
+                    Refresh
+                </button>
+            </div>
+
+            <section class="summary-grid unmatched-summary-grid">
+
+                <article class="summary-card">
+                    <span class="summary-label">Unmatched transactions</span>
+                    <strong id="unmatched-count">0</strong>
+                    <span class="summary-note">Successful payments awaiting allocation</span>
+                </article>
+
+                <article class="summary-card">
+                    <span class="summary-label">Total received</span>
+                    <strong id="unmatched-total-received">₹0</strong>
+                    <span class="summary-note">Value of unmatched transactions</span>
+                </article>
+
+                <article class="summary-card">
+                    <span class="summary-label">Total allocated</span>
+                    <strong id="unmatched-total-allocated">₹0</strong>
+                    <span class="summary-note">Already assigned to instalments</span>
+                </article>
+
+                <article class="summary-card">
+                    <span class="summary-label">Unallocated balance</span>
+                    <strong id="unmatched-total-balance">₹0</strong>
+                    <span class="summary-note">Amount awaiting allocation</span>
+                </article>
+
+            </section>
+
+            <section class="panel">
+
+                <div class="panel-header">
+                    <div>
+                        <h2>Payment allocation queue</h2>
+                        <p>Allocate received payments to the correct student instalments.</p>
+                    </div>
+                </div>
+
+                <div id="unmatched-loading" class="empty-state" hidden>
+                    Loading unmatched payments...
+                </div>
+
+                <div id="unmatched-error" class="detail-message error-message" hidden></div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>STUDENT</th>
+                            <th>TRANSACTION REFERENCE</th>
+                            <th>DATE</th>
+                            <th>METHOD</th>
+                            <th>RECEIVED</th>
+                            <th>ALLOCATED</th>
+                            <th>UNALLOCATED</th>
+                            <th>ACTION</th>
+                        </tr>
+                        </thead>
+
+                        <tbody id="unmatched-table-body">
+                        <tr>
+                            <td colspan="8" class="empty-state">
+                                Select Unmatched Payments to load transactions.
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-footer">
+                    <span id="unmatched-record-count">0 transactions</span>
+                </div>
+
+            </section>
+
+        </section>
+
+        <section class="page-content refunds-view" id="refunds-view" hidden>
+
+            <div class="welcome-row">
+                <div>
+                    <h2>Refund Calculator</h2>
+                    <p>Calculate an estimated refund when a student withdraws from a course.</p>
+                </div>
+            </div>
+
+            <div class="refund-policy-notice">
+                <strong>Demonstration policy</strong>
+                <p>
+                    This calculator uses a sample pro-rata policy based on remaining
+                    course days. It is not a confirmed Company A refund policy.
+                    Verify the applicable policy before approving any refund.
+                </p>
+            </div>
+
+            <section class="panel refund-calculator-panel">
+
+                <div class="panel-header">
+                    <div>
+                        <h2>Calculate student refund</h2>
+                        <p>Select a student, fee plan and withdrawal date.</p>
+                    </div>
+                </div>
+
+                <form id="refund-form" class="refund-form">
+
+                    <div class="refund-form-group">
+                        <label for="refund-student">Select student</label>
+                        <select id="refund-student" required>
+                            <option value="">Select a student</option>
+                        </select>
+                    </div>
+
+                    <div class="refund-form-group">
+                        <label for="refund-fee-plan">Select fee plan</label>
+                        <select id="refund-fee-plan" required disabled>
+                            <option value="">Select a student first</option>
+                        </select>
+                    </div>
+
+                    <div class="refund-form-group">
+                        <label for="refund-withdrawal-date">Withdrawal date</label>
+                        <input
+                                type="date"
+                                id="refund-withdrawal-date"
+                                required
+                        >
+                    </div>
+
+                    <div class="refund-form-actions">
+                        <button
+                                type="submit"
+                                class="button button-primary"
+                                id="calculate-refund-btn"
+                        >
+                            Calculate Refund
+                        </button>
+                    </div>
+
+                </form>
+
+                <div id="refund-loading" class="refund-message" hidden>
+                    Calculating refund...
+                </div>
+
+                <div id="refund-error" class="refund-message refund-error" hidden></div>
+
+            </section>
+
+            <section class="panel refund-result-panel" id="refund-result" hidden>
+
+                <div class="panel-header">
+                    <div>
+                        <h2>Refund calculation result</h2>
+                        <p>Review the estimated refund breakdown.</p>
+                    </div>
+
+                    <span class="refund-estimate-badge">ESTIMATE</span>
+                </div>
+
+                <div class="refund-student-info">
+                    <div>
+                        <span>Student</span>
+                        <strong id="refund-result-student">—</strong>
+                    </div>
+
+                    <div>
+                        <span>Policy</span>
+                        <strong id="refund-result-policy">—</strong>
+                    </div>
+
+                    <div>
+                        <span>Withdrawal date</span>
+                        <strong id="refund-result-date">—</strong>
+                    </div>
+                </div>
+
+                <div class="refund-breakdown">
+
+                    <div class="refund-breakdown-row">
+                        <span>Course start date</span>
+                        <strong id="refund-course-start">—</strong>
+                    </div>
+
+                    <div class="refund-breakdown-row">
+                        <span>Course end date</span>
+                        <strong id="refund-course-end">—</strong>
+                    </div>
+
+                    <div class="refund-breakdown-row">
+                        <span>Total course days</span>
+                        <strong id="refund-total-days">—</strong>
+                    </div>
+
+                    <div class="refund-breakdown-row">
+                        <span>Remaining course days</span>
+                        <strong id="refund-remaining-days">—</strong>
+                    </div>
+
+                    <div class="refund-breakdown-row">
+                        <span>Total eligible amount paid</span>
+                        <strong id="refund-total-paid">₹0</strong>
+                    </div>
+
+                    <div class="refund-breakdown-row">
+                        <span>Pro-rata refund</span>
+                        <strong id="refund-pro-rata">₹0</strong>
+                    </div>
+
+                    <div class="refund-breakdown-row">
+                        <span>Administrative fee</span>
+                        <strong id="refund-admin-fee">₹0</strong>
+                    </div>
+
+                </div>
+
+                <div class="refund-final-amount">
+                    <span>Estimated final refund</span>
+                    <strong id="refund-final-amount">₹0</strong>
+                </div>
+
+                <div class="refund-deadline">
+                    <span>Processing deadline</span>
+                    <strong id="refund-processing-deadline">—</strong>
+                </div>
+
+                <p class="refund-result-disclaimer">
+                    This is a calculation preview only. It does not initiate a payment
+                    or approve a refund.
+                </p>
+
+            </section>
+
+        </section>
+
+        <section class="page-content" id="reminders-view" hidden>
+
+            <div class="welcome-row">
+                <div>
+                    <h2>Fee reminders</h2>
+                    <p>Monitor upcoming, due today and overdue fee reminders.</p>
+                </div>
+
+                <button class="button button-primary" id="generate-reminders-btn">
+                    Generate reminders
+                </button>
+            </div>
+
+            <section class="summary-grid">
+
+                <article class="summary-card">
+                    <span class="summary-label">Total reminders</span>
+                    <strong id="reminder-total">0</strong>
+                    <span class="summary-note">Generated reminder records</span>
+                </article>
+
+                <article class="summary-card">
+                    <span class="summary-label">Sent</span>
+                    <strong id="reminder-sent">0</strong>
+                    <span class="summary-note">Successfully generated</span>
+                </article>
+
+                <article class="summary-card">
+                    <span class="summary-label">Failed</span>
+                    <strong id="reminder-failed">0</strong>
+                    <span class="summary-note">Failed reminder records</span>
+                </article>
+
+            </section>
+
+            <section class="panel">
+
+                <div class="panel-header">
+                    <div>
+                        <h2>Reminder history</h2>
+                        <p>View reminder messages and their delivery status.</p>
+                    </div>
+
+                    <button class="button button-secondary" id="refresh-reminders-btn">
+                        Refresh
+                    </button>
+                </div>
+
+                <div class="toolbar">
+
+                    <input
+                            type="search"
+                            id="reminder-search"
+                            placeholder="Search student or parent..."
+                    >
+
+                    <select id="reminder-type-filter">
+                        <option value="">All reminder types</option>
+                        <option value="UPCOMING">Upcoming</option>
+                        <option value="DUE_TODAY">Due today</option>
+                        <option value="OVERDUE">Overdue</option>
+                    </select>
+
+                    <select id="reminder-status-filter">
+                        <option value="">All statuses</option>
+                        <option value="SENT">Sent</option>
+                        <option value="FAILED">Failed</option>
+                    </select>
+
+                </div>
+
+                <div id="reminder-feedback" class="reminder-feedback" hidden></div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>STUDENT</th>
+                            <th>PARENT</th>
+                            <th>INSTALMENT</th>
+                            <th>TYPE</th>
+                            <th>LANGUAGE</th>
+                            <th>DATE</th>
+                            <th>STATUS</th>
+                            <th>MESSAGE</th>
+                        </tr>
+                        </thead>
+
+                        <tbody id="reminder-table-body">
+                        <tr>
+                            <td colspan="8" class="empty-state">
+                                Select Reminders to load history.
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-footer">
+                    <span id="reminder-record-count">0 reminders</span>
+                </div>
+
+            </section>
+
+        </section>
+
         <section class="student-detail-view" id="student-detail-view" hidden>
 
             <div class="detail-page-content">
@@ -240,7 +726,6 @@
 
                     </div>
 
-                    <!-- Fee plans -->
                     <section class="detail-panel">
 
                         <div class="detail-panel-heading">
@@ -254,7 +739,6 @@
 
                     </section>
 
-                    <!-- Payment history -->
                     <section class="detail-panel">
 
                         <div class="detail-panel-heading">
@@ -284,7 +768,6 @@
 
                     </section>
 
-                    <!-- Student information -->
                     <section class="detail-panel">
 
                         <div class="detail-panel-heading">
@@ -326,5 +809,87 @@
 
     </main>
 </div>
+
+<div class="allocation-modal-backdrop" id="allocation-modal" hidden>
+
+    <div class="allocation-modal" role="dialog" aria-modal="true" aria-labelledby="allocation-modal-title">
+
+        <div class="allocation-modal-header">
+            <div>
+                <h2 id="allocation-modal-title">Allocate payment</h2>
+                <p>Assign the received amount to an outstanding instalment.</p>
+            </div>
+
+            <button type="button" class="modal-close-button" id="close-allocation-modal" aria-label="Close">
+                ×
+            </button>
+        </div>
+
+        <div class="allocation-payment-info">
+            <div>
+                <span>Student</span>
+                <strong id="allocation-student-name">—</strong>
+            </div>
+
+            <div>
+                <span>Transaction</span>
+                <strong id="allocation-transaction">—</strong>
+            </div>
+
+            <div>
+                <span>Received amount</span>
+                <strong id="allocation-received-amount">₹0</strong>
+            </div>
+
+            <div>
+                <span>Unallocated balance</span>
+                <strong id="allocation-remaining-amount">₹0</strong>
+            </div>
+        </div>
+
+        <form id="allocation-form">
+
+            <div class="allocation-form-group">
+                <label for="allocation-instalment">Select instalment</label>
+                <select id="allocation-instalment" required>
+                    <option value="">Select an outstanding instalment</option>
+                </select>
+                <span id="allocation-instalment-balance" class="form-help">
+                    Select an instalment to view its outstanding balance.
+                </span>
+            </div>
+
+            <div class="allocation-form-group">
+                <label for="allocation-amount">Amount to allocate (₹)</label>
+                <input
+                        type="number"
+                        id="allocation-amount"
+                        min="0.01"
+                        step="0.01"
+                        placeholder="Enter allocation amount"
+                        required
+                >
+                <span class="form-help" id="allocation-amount-help">
+                    The amount cannot exceed the payment balance or instalment balance.
+                </span>
+            </div>
+
+            <div id="allocation-message" class="allocation-message" hidden></div>
+
+            <div class="allocation-modal-actions">
+                <button type="button" class="button button-secondary" id="cancel-allocation-btn">
+                    Cancel
+                </button>
+
+                <button type="submit" class="button button-primary" id="confirm-allocation-btn">
+                    Confirm allocation
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
 </body>
 </html>

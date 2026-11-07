@@ -29,10 +29,18 @@ public class Parent {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    public Parent(String name, String mobileNo, String email) {
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 10)
+    private ReminderLanguage preferredLanguage = ReminderLanguage.ENGLISH;
+
+
+    public Parent(String name, String mobileNo, String email, ReminderLanguage preferredLanguage) {
         this.name = name;
         this.mobileNo = mobileNo;
         this.email = email;
+        this.preferredLanguage = preferredLanguage == null
+                ? ReminderLanguage.ENGLISH
+                : preferredLanguage;
     }
 
 
