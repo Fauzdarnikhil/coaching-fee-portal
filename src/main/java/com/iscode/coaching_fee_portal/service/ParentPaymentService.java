@@ -211,18 +211,20 @@ public class ParentPaymentService {
                             student.getId()
                     );
 
+
             for (Payment payment : payments) {
 
-                BigDecimal allocatedAmount = BigDecimal.ZERO;
+                List<PaymentAllocation> allocations =
+                        paymentAllocationRepository.findByPaymentId(payment.getId());
 
-                if (payment.getPaymentStatus() == PaymentStatus.SUCCESS) {
+                List<PaymentAllocation> successfulAllocations =
+                        payment.getPaymentStatus() == PaymentStatus.SUCCESS
+                                ? allocations
+                                : List.of();
 
-                    allocatedAmount = paymentAllocationRepository
-                            .findByPaymentId(payment.getId())
-                            .stream()
-                            .map(PaymentAllocation::getAllocatedAmount)
-                            .reduce(BigDecimal.ZERO, BigDecimal::add);
-                }
+                BigDecimal allocatedAmount = successfulAllocations.stream()
+                        .map(PaymentAllocation::getAllocatedAmount)
+                        .reduce(BigDecimal.ZERO, BigDecimal::add);
 
                 BigDecimal unallocatedAmount = BigDecimal.ZERO;
 
@@ -233,8 +235,9 @@ public class ParentPaymentService {
 
                 Long instalmentNumber = null;
 
-                if (payment.getIntendedInstalment() != null) {
-                    instalmentNumber = payment.getIntendedInstalment()
+                if (successfulAllocations.size() == 1) {
+                    instalmentNumber = successfulAllocations.get(0)
+                            .getInstalment()
                             .getInstalmentNumber();
                 }
 
