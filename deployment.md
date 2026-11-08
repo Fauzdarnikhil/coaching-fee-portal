@@ -88,8 +88,8 @@ Use the seeded/demo accounts in the project. Replace these placeholders with the
 
 I have Seeded 4 Students, so I am providing two registered mobile number to test. For these numbers the OTP will be generated at Console for testing Purpose.
 
-- Registered mobile number 1: `9000000002'
-- Registered mobile number 2: `9000000003'
+- Registered mobile number 1: `9000000002`
+- Registered mobile number 2: `9000000003`
 - OTP: Generated at login and printed in the Spring Boot application console.
 
 ### Parent Login Procedure
