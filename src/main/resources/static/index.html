@@ -16,7 +16,7 @@
 <body>
 <div class="app-layout">
 
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
         <div class="brand">
             <div class="brand-mark">A</div>
             <div>
@@ -59,17 +59,24 @@
                     <span>Jaipur Main Centre</span>
                 </div>
             </div>
+            <button type="button" class="logout-link" id="logout-btn">
+                <span class="logout-icon" aria-hidden="true">↪</span>
+                <span>Log out</span>
+            </button>
         </div>
     </aside>
 
     <main class="main-content">
 
         <header class="topbar">
-            <div>
-                <div class="breadcrumb">
-                    Workspace / <strong id="breadcrumb-current">Overview</strong>
+            <div class="topbar-heading">
+                <button type="button" class="menu-toggle" id="menu-toggle" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false">☰</button>
+                <div>
+                    <div class="breadcrumb">
+                        Workspace / <strong id="breadcrumb-current">Overview</strong>
+                    </div>
+                    <h1 id="page-title">Fee Overview</h1>
                 </div>
-                <h1 id="page-title">Fee Overview</h1>
             </div>
 
             <div class="topbar-right">
@@ -1032,6 +1039,7 @@
 
     </div>
 </div>
+<div class="sidebar-overlay" id="sidebar-overlay" aria-hidden="true"></div>
 
 </body>
 </html>

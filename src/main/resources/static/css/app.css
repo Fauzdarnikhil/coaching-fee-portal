@@ -19,7 +19,7 @@
     --danger: #b74747;
     --danger-bg: #fceeee;
 
-    --sidebar-width: 238px;
+    --sidebar-width: 255px;
 }
 
 * {
@@ -1534,3 +1534,151 @@ css -
     }
 }
 
+.logout-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0 0 8px;
+    padding: 8px;
+    border: none;
+    background: transparent;
+    color: #c94b4b;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.logout-link:hover {
+    color: #a83232;
+}
+
+.logout-icon {
+    font-size: 19px;
+    font-weight: 700;
+}
+
+
+/* Parent Portal-style responsive sidebar navigation */
+.menu-toggle {
+    display: none;
+    flex: 0 0 auto;
+    border: 0;
+    background: transparent;
+    color: var(--text);
+    font-size: 22px;
+    line-height: 1;
+    padding: 7px 8px;
+    border-radius: 7px;
+}
+
+.menu-toggle:hover {
+    background: var(--primary-light);
+}
+
+.topbar-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 850px) {
+    .sidebar {
+        position: fixed;
+        top: 0;
+        right: auto;
+        bottom: 0;
+        left: 0;
+        width: var(--sidebar-width);
+        height: 100vh;
+        z-index: 100;
+        transform: translateX(-100%);
+        transition: transform 0.25s ease;
+        overflow-y: auto;
+        border-right: 1px solid var(--border);
+        border-top: 0;
+        padding: 22px 14px;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .brand,
+    .nav-section-label,
+    .sidebar-bottom {
+        display: flex;
+    }
+
+    .brand {
+        align-items: center;
+    }
+
+    .nav-section-label {
+        display: block;
+    }
+
+    .navigation {
+        width: auto;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 4px;
+        overflow: visible;
+    }
+
+    .nav-link {
+        flex: initial;
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 12px;
+        min-width: 0;
+        padding: 11px 12px;
+        font-size: 13px;
+    }
+
+    .nav-link span {
+        width: 18px;
+        font-size: 16px;
+    }
+
+    .sidebar-overlay.show {
+        display: block;
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding-bottom: 0;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .topbar {
+        justify-content: space-between;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 650px) {
+    .topbar {
+        padding: 14px 16px;
+    }
+
+    .topbar-right {
+        gap: 10px;
+    }
+
+    .centre-label {
+        display: none;
+    }
+}
