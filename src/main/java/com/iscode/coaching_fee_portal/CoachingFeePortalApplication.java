@@ -36,7 +36,9 @@ public class CoachingFeePortalApplication {
             PaymentAllocationService paymentAllocationService,
             ParentRepository parentRepository,
             ParentStudentRepository parentStudentRepository,
-            RefundPolicyRepository refundPolicyRepository
+            RefundPolicyRepository refundPolicyRepository,
+            AttendanceRecordRepository attendanceRecordRepository,
+            TestResultRepository testResultRepository
     ) {
 
         return args -> {
@@ -259,6 +261,15 @@ public class CoachingFeePortalApplication {
                     today.plusDays(90)
             );
 
+            seedAcademicRecords(
+                    aarav,
+                    ishita,
+                    rohan,
+                    ananya,
+                    attendanceRecordRepository,
+                    testResultRepository
+            );
+
             Payment aaravPayment = seedSuccessfulPayment(
                     paymentRepository,
                     aarav,
@@ -366,6 +377,99 @@ public class CoachingFeePortalApplication {
 
             System.out.println("===============================");
         };
+    }
+
+    private void seedAcademicRecords(
+            Student aarav,
+            Student ishita,
+            Student rohan,
+            Student ananya,
+            AttendanceRecordRepository attendanceRepository,
+            TestResultRepository testRepository
+    ) {
+        seedAttendance(aarav, attendanceRepository, 27, 2, 1);
+        seedAttendance(ishita, attendanceRepository, 15, 0, 15);
+        seedAttendance(rohan, attendanceRepository, 22, 3, 5);
+        seedAttendance(ananya, attendanceRepository, 17, 0, 13);
+
+        seedTests(aarav, testRepository, "Mathematics", 80, 82);
+        seedTests(ishita, testRepository, "Physics", 85, 60);
+        seedTests(rohan, testRepository, "Chemistry", 80, 68);
+        seedTests(ananya, testRepository, "Mathematics", 90, 65);
+    }
+
+    private void seedAttendance(
+            Student student,
+            AttendanceRecordRepository repository,
+            int presentCount,
+            int lateCount,
+            int absentCount
+    ) {
+        if (repository.countByStudent_Id(student.getId()) > 0) {
+            return;
+        }
+
+        int totalRecords = presentCount + lateCount + absentCount;
+
+        for (int i = 0; i < totalRecords; i++) {
+
+            AttendanceStatus status;
+
+            if (i < presentCount) {
+                status = AttendanceStatus.PRESENT;
+            } else if (i < presentCount + lateCount) {
+                status = AttendanceStatus.LATE;
+            } else {
+                status = AttendanceStatus.ABSENT;
+            }
+
+            AttendanceRecord record = new AttendanceRecord(
+                    null,
+                    student,
+                    LocalDate.now().minusDays(i),
+                    status,
+                    null
+            );
+
+            repository.save(record);
+        }
+    }
+
+    private void seedTests(
+            Student student,
+            TestResultRepository repository,
+            String subject,
+            double previousMarks,
+            double latestMarks
+    ) {
+        if (!repository.findByStudent_IdOrderByTestDateDesc(student.getId()).isEmpty()) {
+            return;
+        }
+
+        TestResult previousTest = new TestResult(
+                null,
+                student,
+                subject + " Test 1",
+                subject,
+                BigDecimal.valueOf(previousMarks),
+                new BigDecimal("100.00"),
+                LocalDate.now().minusDays(30),
+                null
+        );
+
+        TestResult latestTest = new TestResult(
+                null,
+                student,
+                subject + " Test 2",
+                subject,
+                BigDecimal.valueOf(latestMarks),
+                new BigDecimal("100.00"),
+                LocalDate.now().minusDays(7),
+                null
+        );
+
+        repository.save(previousTest);
+        repository.save(latestTest);
     }
 
     private Student seedStudent(

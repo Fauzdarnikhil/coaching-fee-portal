@@ -1,10 +1,9 @@
 package com.iscode.coaching_fee_portal.service;
 
 import com.iscode.coaching_fee_portal.dto.ParentAcademicResponse;
+import com.iscode.coaching_fee_portal.entity.AttendanceStatus;
 import com.iscode.coaching_fee_portal.entity.ParentStudent;
 import com.iscode.coaching_fee_portal.entity.Student;
-import com.iscode.coaching_fee_portal.entity.AttendanceRecord;
-import com.iscode.coaching_fee_portal.entity.TestResult;
 import com.iscode.coaching_fee_portal.repository.ParentStudentRepository;
 import com.iscode.coaching_fee_portal.repository.AttendanceRecordRepository;
 import com.iscode.coaching_fee_portal.repository.TestResultRepository;
@@ -47,17 +46,17 @@ public class ParentAcademicService {
 
                     long presentClasses =
                             attendanceRecordRepository.countByStudent_IdAndStatus(
-                                    studentId, "PRESENT"
+                                    studentId, AttendanceStatus.PRESENT
                             );
 
                     long absentClasses =
                             attendanceRecordRepository.countByStudent_IdAndStatus(
-                                    studentId, "ABSENT"
+                                    studentId, AttendanceStatus.ABSENT
                             );
 
                     long lateClasses =
                             attendanceRecordRepository.countByStudent_IdAndStatus(
-                                    studentId, "LATE"
+                                    studentId, AttendanceStatus.LATE
                             );
 
                     double attendancePercentage = totalClasses == 0
@@ -66,10 +65,10 @@ public class ParentAcademicService {
 
                     List<ParentAcademicResponse.AttendanceInfo> attendance =
                             attendanceRecordRepository
-                                    .findByStudent_IdOrderByAttendanceDateDesc(studentId)
+                                    .findByStudent_IdOrderByClassDateDesc(studentId)
                                     .stream()
                                     .map(record -> new ParentAcademicResponse.AttendanceInfo(
-                                            record.getAttendanceDate(),
+                                            record.getClassDate(),
                                             record.getStatus()
                                     ))
                                     .toList();

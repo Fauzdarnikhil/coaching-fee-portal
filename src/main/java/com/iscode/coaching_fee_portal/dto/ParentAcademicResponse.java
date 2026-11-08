@@ -24,7 +24,7 @@ public record ParentAcademicResponse(
 
     public record AttendanceInfo(
             LocalDate date,
-            String status
+            com.iscode.coaching_fee_portal.entity.AttendanceStatus status
     ) {
     }
 

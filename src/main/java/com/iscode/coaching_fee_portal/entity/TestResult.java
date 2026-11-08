@@ -1,10 +1,19 @@
 package com.iscode.coaching_fee_portal.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "test_results")
 public class TestResult {
@@ -13,7 +22,7 @@ public class TestResult {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "student_id", nullable = false)
     private Student student;
 
@@ -32,69 +41,11 @@ public class TestResult {
     @Column(nullable = false)
     private LocalDate testDate;
 
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
-
-    public TestResult() {
-    }
 
     @PrePersist
     public void prePersist() {
         createdAt = LocalDateTime.now();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
-    public String getTestName() {
-        return testName;
-    }
-
-    public void setTestName(String testName) {
-        this.testName = testName;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public BigDecimal getMarksObtained() {
-        return marksObtained;
-    }
-
-    public void setMarksObtained(BigDecimal marksObtained) {
-        this.marksObtained = marksObtained;
-    }
-
-    public BigDecimal getMaximumMarks() {
-        return maximumMarks;
-    }
-
-    public void setMaximumMarks(BigDecimal maximumMarks) {
-        this.maximumMarks = maximumMarks;
-    }
-
-    public LocalDate getTestDate() {
-        return testDate;
-    }
-
-    public void setTestDate(LocalDate testDate) {
-        this.testDate = testDate;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
     }
 }

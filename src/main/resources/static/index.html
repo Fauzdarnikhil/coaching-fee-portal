@@ -669,6 +669,148 @@
 
         </section>
 
+
+        <section class="page-content" id="risk-view" hidden>
+
+            <div class="welcome-row">
+                <div>
+                    <h2>Student Risk Assessment</h2>
+                    <p>Identify students who may need academic or financial counselling.</p>
+                </div>
+
+                <button class="button button-secondary" id="refresh-risk-btn">
+                    Refresh
+                </button>
+            </div>
+
+            <section class="summary-grid">
+                <article class="summary-card">
+                    <span class="summary-label">High Risk</span>
+                    <strong id="risk-high-count">0</strong>
+                    <span class="summary-note">Immediate attention</span>
+                </article>
+
+                <article class="summary-card">
+                    <span class="summary-label">Medium Risk</span>
+                    <strong id="risk-medium-count">0</strong>
+                    <span class="summary-note">Counsellor review</span>
+                </article>
+
+                <article class="summary-card">
+                    <span class="summary-label">Low Risk</span>
+                    <strong id="risk-low-count">0</strong>
+                    <span class="summary-note">No immediate concern</span>
+                </article>
+
+                <article class="summary-card">
+                    <span class="summary-label">Counsellor Tasks</span>
+                    <strong id="risk-task-count">0</strong>
+                    <span class="summary-note">Follow-up records</span>
+                </article>
+            </section>
+
+            <section class="panel risk-panel">
+                <div class="panel-header">
+                    <div>
+                        <h2>Student Risk Overview</h2>
+                        <p>Risk scores and factors contributing to each assessment.</p>
+                    </div>
+                </div>
+
+                <div class="toolbar">
+                    <input
+                            type="search"
+                            id="risk-search"
+                            placeholder="Search student or ID..."
+                    >
+
+                    <select id="risk-level-filter">
+                        <option value="">All risk levels</option>
+                        <option value="HIGH">High</option>
+                        <option value="MEDIUM">Medium</option>
+                        <option value="LOW">Low</option>
+                        <option value="INSUFFICIENT_DATA">Insufficient data</option>
+                    </select>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>STUDENT</th>
+                            <th>BATCH</th>
+                            <th>RISK SCORE</th>
+                            <th>RISK LEVEL</th>
+                            <th>RISK FACTORS</th>
+                            <th>DATA</th>
+                        </tr>
+                        </thead>
+
+                        <tbody id="risk-table-body">
+                        <tr>
+                            <td colspan="6" class="empty-state">
+                                Select Student Risk to load assessments.
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-footer">
+                    <span id="risk-record-count">0 students</span>
+                </div>
+            </section>
+
+            <section class="panel risk-panel">
+                <div class="panel-header">
+                    <div>
+                        <h2>Counsellor Follow-up Tasks</h2>
+                        <p>Review risk flags and record counsellor actions.</p>
+                    </div>
+                </div>
+
+                <div class="toolbar">
+                    <select id="task-status-filter">
+                        <option value="">All task statuses</option>
+                        <option value="OPEN">Open</option>
+                        <option value="CONTACTED">Contacted</option>
+                        <option value="FALSE_POSITIVE">False Positive</option>
+                    </select>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>STUDENT</th>
+                            <th>RISK</th>
+                            <th>REASONS</th>
+                            <th>STATUS</th>
+                            <th>CREATED</th>
+                            <th>ACTION</th>
+                        </tr>
+                        </thead>
+
+                        <tbody id="counsellor-task-body">
+                        <tr>
+                            <td colspan="6" class="empty-state">
+                                Counsellor tasks will appear here.
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-footer">
+                    <span id="counsellor-task-count">0 tasks</span>
+                </div>
+            </section>
+
+            <div id="risk-feedback" class="detail-message" hidden></div>
+
+        </section>
+
+
         <section class="student-detail-view" id="student-detail-view" hidden>
 
             <div class="detail-page-content">

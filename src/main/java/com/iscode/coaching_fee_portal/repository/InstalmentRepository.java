@@ -22,4 +22,6 @@ public interface InstalmentRepository extends JpaRepository<Instalment, Long> {
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT i FROM Instalment i WHERE i.id = :id")
     Optional<Instalment> findByIdWithLock(@Param("id") Long id);
+
+    List<Instalment> findByFeePlan_Student_Id(Long studentId);
 }
